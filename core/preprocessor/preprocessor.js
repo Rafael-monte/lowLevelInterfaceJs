@@ -29,7 +29,7 @@ async function compileLowLevelPrograms(showStatistics) {
 async function generateOutputFileByModule(module) {
     let executionCommand = COMMANDS_BY_LANGUAGE[module.targetLanguage](module);
     showModule(module, executionCommand);
-    compileModule(executionCommand, module);
+    await compileModule(executionCommand, module);
     addFunctionInLowLevelFunctionsBuffer(module, createFunctionToAssociate(module));
 }
 
@@ -50,21 +50,26 @@ function createFunctionToAssociate(module) {
 }
 
 
-function compileModule(executionCommand, module) {
-    exec(executionCommand, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Ocorreu um erro ao compilar o modulo ${module.name}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-
-        if (stdout !== "") {
-            console.log(`${module.name}: Modulo compilado, porém com avisos: ${stdout}`);
-        }
-    });
+async function compileModule(executionCommand, module) {
+    return new Promise((resolve, reject) => {
+        exec(executionCommand, (error, stdout, stderr) => {
+           if (error) {
+               console.error(`Ocorreu um erro ao compilar o modulo ${module.name}`);
+               reject(error);
+               return;
+           }
+           if (stderr) {
+               console.log(`stderr: ${stderr}`);
+               resolve(stderr);
+               return;
+           }
+   
+           if (stdout !== "") {
+               console.log(`${module.name}: Modulo compilado, porém com avisos: ${stdout}`);
+            }
+            resolve(stdout);
+       });
+    })
 }
 
 /**

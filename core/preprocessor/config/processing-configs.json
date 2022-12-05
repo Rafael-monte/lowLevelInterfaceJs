@@ -11,6 +11,18 @@
             "location": "core\\preprocessor\\compile\\fastSquareRoot.c",
             "outputName": "core\\preprocessor\\output\\fastSquareRoot",
             "operationalSystem": "windows"
+        },
+        {
+            "targetLanguage": "C++",
+            "name": "teste",
+            "proposal": "PROCESS_ELEMENTS_AND_RETURN_A_VALUE",
+            "argumentTypes": [
+                "float"
+            ],
+            "returnType": "number",
+            "location": "core\\preprocessor\\compile\\teste.cpp",
+            "outputName": "core\\preprocessor\\output\\teste",
+            "operationalSystem": "windows"
         }
     ]
 }

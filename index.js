@@ -1,9 +1,14 @@
 const { low_function } = require("./core/builtin/lowLevelFunctions");
 const { start } = require("./core/preprocessor/preprocessor");
 
-function main() {
-    low_function('fastSquareRoot', 0.5).then(r => console.log(r));
+async function main() {
+    await start(true);
+    low_function('fastSquareRoot', 42).then(raiz => {
+        low_function('teste', raiz).then(resposta => {
+            console.log(resposta);
+        })
+    });
 }
 
-start();
+
 main();

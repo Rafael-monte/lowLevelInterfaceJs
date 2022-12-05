@@ -11,7 +11,12 @@ function addFunctionInLowLevelFunctionsBuffer(module, functionAssociated) {
 
 
 async function low_function(functionName, ...args) {
-    await lll_function.get(functionName)(args);
+    if (args.length > 0) {
+        await lll_function.get(functionName)(args);
+    }
+    else {
+        await lll_function.get(functionName)();
+    }
     return localStorage.getItem(functionName);
 }
 
